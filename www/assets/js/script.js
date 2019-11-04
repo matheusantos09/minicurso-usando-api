@@ -1,36 +1,38 @@
-const pokedex = document.getElementById('pokedex');
+"use strict";
 
-const fetchPokemon = () => {
-    const promises = [];
-    for (let i = 1; i <= 150; i++) {
-        const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        promises.push(fetch(url).then((res) => res.json()));
-    }
-    Promise.all(promises).then((results) => {
-        const pokemon = results.map((result) => ({
-            name: result.name,
-            image: result.sprites['front_default'],
-            type: result.types.map((type) => type.type.name).join(', '),
-            id: result.id
-        }));
-        displayPokemon(pokemon);
+var pokedex = document.getElementById('pokedex');
+
+var fetchPokemon = function fetchPokemon() {
+  var promises = [];
+
+  for (var i = 1; i <= 150; i++) {
+    var url = "https://pokeapi.co/api/v2/pokemon/".concat(i);
+    promises.push(fetch(url).then(function (res) {
+      return res.json();
+    }));
+  }
+
+  Promise.all(promises).then(function (results) {
+    var pokemon = results.map(function (result) {
+      return {
+        name: result.name,
+        image: result.sprites['front_default'],
+        type: result.types.map(function (type) {
+          return type.type.name;
+        }).join(', '),
+        id: result.id
+      };
     });
+    displayPokemon(pokemon);
+  });
 };
 
-const displayPokemon = (pokemon) => {
-    console.log(pokemon);
-    const pokemonHTMLString = pokemon
-        .map(
-            (pokeman) => `
-        <li class="card">
-            <img class="card-image" src="${pokeman.image}"/>
-            <h2 class="card-title">${pokeman.id}. ${pokeman.name}</h2>
-            <p class="card-subtitle">Type: ${pokeman.type}</p>
-        </li>
-    `
-        )
-        .join('');
-    pokedex.innerHTML = pokemonHTMLString;
+var displayPokemon = function displayPokemon(pokemon) {
+  console.log(pokemon);
+  var pokemonHTMLString = pokemon.map(function (pokeman) {
+    return "\n        <li class=\"card\">\n            <img class=\"card-image\" src=\"".concat(pokeman.image, "\"/>\n            <h2 class=\"card-title\">").concat(pokeman.id, ". ").concat(pokeman.name, "</h2>\n            <p class=\"card-subtitle\">Type: ").concat(pokeman.type, "</p>\n        </li>\n    ");
+  }).join('');
+  pokedex.innerHTML = pokemonHTMLString;
 };
 
 fetchPokemon();
