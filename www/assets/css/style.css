@@ -1,13 +1,23 @@
+*{
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+}
+
 body {
-    background-color: orangered;
-    color: white;
+    background-color: #fff;
+    color: #707070;
     margin: 0;
     font-family: rubik;
+    overflow-y: scroll;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .container {
     padding: 40px;
     margin: 0 auto;
+    max-width: 1230px;
 }
 
 h1 {
@@ -17,18 +27,40 @@ h1 {
 }
 
 #pokedex {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-gap: 20px;
-    padding-inline-start: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.logo{
+    max-width: 300px;
+    display: block;
+    margin: 0 auto 30px;
+}
+
+input{
+    -webkit-appearance: none;
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    height: 40px;
+    max-width: 300px;
+    width: 100%;
+    display: block;
+    margin: 20px auto;
+    padding: 0 18px;
 }
 
 .card {
+    flex: 1 100%;
     list-style: none;
     padding: 40px;
-    background-color: #f4f4f4;
+    background-color: #f1f1f1;
     color: #222;
-  text-align: center;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.05);
+    margin: 15px;
+    max-width: 300px;
 }
 
 .card:hover {
@@ -51,6 +83,64 @@ h1 {
     height: 180px;
 }
 
+.load{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+    background: #FBFB59;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.load .box{
+    transition: cubic-bezier(.54,-.65,.48,1.64)  .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.load .box img{
+    display: block;
+    max-width: 100%;
+}
+
+.load .box::after{
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 4px solid #3000E4;
+    border-right-color: transparent;
+    animation: load infinite linear .75s;
+    
+}
+
+.success .load {
+    opacity: 0;
+    visibility: hidden;
+    transition: cubic-bezier(.54,-.65,.48,1.64) .3s;
+}
+
+.success .load .box{
+    transform: scale(.4);
+}
+
+@keyframes load {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @keyframes bounce {
     20% {
         transform: translateY(-6px);
@@ -64,5 +154,11 @@ h1 {
     }
     100% {
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px){
+    .container{
+        padding: 20px;
     }
 }
